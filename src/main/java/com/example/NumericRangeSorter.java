@@ -32,7 +32,7 @@ public class NumericRangeSorter {
 		//First order the map so that the entries with the longest lists will evaluate first
 		//this will allow those elements to be filtered out so there will be no repetition of value.
 		Map<String, List<Integer>> sorted = sortingMap.entrySet().stream()
-		        .sorted(comparingInt(e->((Map<String, List<Integer>>) ((Entry) e).getValue()).size()).reversed())
+		        .sorted(comparingInt(e->e.getValue().size()))
 		        .collect(toMap(
 		                Map.Entry::getKey,
 		                Map.Entry::getValue,
