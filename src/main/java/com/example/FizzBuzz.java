@@ -46,7 +46,7 @@ public class FizzBuzz {
      */
     @GET
     @Path("/{upperBound}")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON + ";" + UTF8_CHARSET)
     public Response getFizzBuzz(@PathParam("upperBound") String upperBound) throws JsonGenerationException, JsonMappingException, IOException {
     	ResponseBuilder response = Response.ok();
     	ObjectMapper mapper = new ObjectMapper();
