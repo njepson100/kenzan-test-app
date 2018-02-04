@@ -3,7 +3,11 @@ package com.example;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.glassfish.grizzly.http.server.HttpServer;
 
 import org.junit.After;
@@ -11,11 +15,22 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MyResourceTest {
 
     private HttpServer server;
     private WebTarget target;
 
+	private static String fizz = "Fizz";
+	private static String buzz = "Buzz";
+	private static String fizzBuzz = "FizzBuzz";
+    
     @Before
     public void setUp() throws Exception {
         // start the server
@@ -38,11 +53,16 @@ public class MyResourceTest {
     }
 
     /**
-     * Test to see that the message "Got it!" is sent in the response.
+     * Test to see if Bad Request is returned when the upperBound pathParam is not a valid integer
      */
-//    @Test
-//    public void testGetIt() {
-//        String responseMsg = target.path("myresource").request().get(String.class);
-//        assertEquals("Got it!", responseMsg);
-//    }
+    @Test
+    public void getFizzBuzzInvalidParamTest() throws JsonGenerationException, JsonMappingException, IOException
+    {	
+    	NumericRangeSorter testNumericRangeSorter = new NumericRangeSorter();
+    	FizzBuzz fizzBuzz = new FizzBuzz(testNumericRangeSorter);
+    	
+    	Response actualResponse = fizzBuzz.getFizzBuzz("11.0");
+    	assertEquals(Status.BAD_REQUEST.getStatusCode(), actualResponse.getStatus());
+    }
+    
 }
