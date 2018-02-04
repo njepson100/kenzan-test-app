@@ -29,12 +29,7 @@ public class FizzBuzz {
 	
 	protected static final String UTF8_CHARSET = "charset=UTF-8";
 	
-	private NumericRangeSorter numericRangeSorter;
 	
-	public FizzBuzz(NumericRangeSorter sorter)
-	{
-		numericRangeSorter = sorter;
-	}
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
@@ -46,7 +41,7 @@ public class FizzBuzz {
      */
     @GET
     @Path("/{upperBound}")
-    @Produces(MediaType.APPLICATION_JSON + ";" + UTF8_CHARSET)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response getFizzBuzz(@PathParam("upperBound") String upperBound) throws JsonGenerationException, JsonMappingException, IOException {
     	ResponseBuilder response = Response.ok();
     	ObjectMapper mapper = new ObjectMapper();
@@ -55,8 +50,10 @@ public class FizzBuzz {
     		response.status(Status.BAD_REQUEST).entity(mapper.writeValueAsString("Upper bound must be a numeric value"));
     	}
     	else
-    	{        	
-        	response.entity(mapper.writeValueAsString(numericRangeSorter.getFizzBuzzSort(Integer.parseInt(upperBound)))).status(Status.OK);
+    	{
+        	NumericRangeSorter sorter = new NumericRangeSorter();
+        	
+        	response.entity(mapper.writeValueAsString(sorter.getFizzBuzzSort(Integer.parseInt(upperBound)))).status(Status.OK);
     	}
 
     	return response.build();

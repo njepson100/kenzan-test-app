@@ -53,13 +53,13 @@ public class MyResourceTest {
     }
 
     /**
-     * Test to see if Bad Request is returned when the upperBound pathParam is not a valid integer
+     * Test to see if Bad Request is returned when the upperBound pathParam is not a valid number
      */
     @Test
     public void getFizzBuzzInvalidParamTest() throws JsonGenerationException, JsonMappingException, IOException
     {	
     	NumericRangeSorter testNumericRangeSorter = new NumericRangeSorter();
-    	FizzBuzz fizzBuzz = new FizzBuzz(testNumericRangeSorter);
+    	FizzBuzz fizzBuzz = new FizzBuzz();
     	
     	Response actualResponse = fizzBuzz.getFizzBuzz("11.0");
     	assertEquals(Status.BAD_REQUEST.getStatusCode(), actualResponse.getStatus());
