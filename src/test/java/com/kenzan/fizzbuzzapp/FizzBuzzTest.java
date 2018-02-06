@@ -1,10 +1,12 @@
-package com.example;
+package com.kenzan.fizzbuzzapp;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -13,6 +15,11 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
+
+import com.kenzan.fizzbuzzapp.FizzBuzz;
+import com.kenzan.fizzbuzzapp.Main;
+
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -22,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyResourceTest {
+public class FizzBuzzTest {
 
     private HttpServer server;
     private WebTarget target;
@@ -54,15 +61,20 @@ public class MyResourceTest {
 
     /**
      * Test to see if Bad Request is returned when the upperBound pathParam is not a valid number
+     * @throws SAXException 
+     * @throws ParserConfigurationException 
+     * @throws XPathExpressionException 
+     * @throws NumberFormatException 
      */
     @Test
-    public void getFizzBuzzInvalidParamTest() throws JsonGenerationException, JsonMappingException, IOException
+    public void getFizzBuzzInvalidParamTest() throws JsonGenerationException, JsonMappingException, IOException, NumberFormatException, XPathExpressionException, ParserConfigurationException, SAXException
     {	
-    	NumericRangeSorter testNumericRangeSorter = new NumericRangeSorter();
     	FizzBuzz fizzBuzz = new FizzBuzz();
     	
     	Response actualResponse = fizzBuzz.getFizzBuzz("11.0");
     	assertEquals(Status.BAD_REQUEST.getStatusCode(), actualResponse.getStatus());
     }
+    
+    //I want to add some aspect oriented benchmarking for timings.  Right now a sort with 
     
 }

@@ -1,4 +1,4 @@
-package com.example;
+package com.kenzan.fizzbuzzapp;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,11 +14,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -38,22 +41,26 @@ public class FizzBuzz {
      * @throws IOException 
      * @throws JsonMappingException 
      * @throws JsonGenerationException 
+     * @throws SAXException 
+     * @throws ParserConfigurationException 
+     * @throws XPathExpressionException 
+     * @throws NumberFormatException 
      */
     @GET
     @Path("/{upperBound}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getFizzBuzz(@PathParam("upperBound") String upperBound) throws JsonGenerationException, JsonMappingException, IOException {
+    public Response getFizzBuzz(@PathParam("upperBound") String upperBound) throws JsonGenerationException, JsonMappingException, IOException, NumberFormatException, XPathExpressionException, ParserConfigurationException, SAXException {
     	ResponseBuilder response = Response.ok();
     	ObjectMapper mapper = new ObjectMapper();
     	if(! upperBound.chars().allMatch( Character::isDigit ))
     	{
-    		response.status(Status.BAD_REQUEST).entity(mapper.writeValueAsString("Upper bound must be a numeric value"));
+    		response.status(Status.BAD_REQUEST).entity(mapper.writeValueAsString("Upper bound must be an integer value"));
     	}
     	else
     	{
-        	NumericRangeSorter sorter = new NumericRangeSorter();
+        	SortMediator sortMediator = new SortMediator();
         	
-        	response.entity(mapper.writeValueAsString(sorter.getFizzBuzzSort(Integer.parseInt(upperBound)))).status(Status.OK);
+        	response.entity(mapper.writeValueAsString(sortMediator.fizzBuzzSort(Integer.parseInt(upperBound)))).status(Status.OK);
     	}
 
     	return response.build();
