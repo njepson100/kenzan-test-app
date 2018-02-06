@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding ="UTF-8"?>
+<SortConfigs>
+	<SortConfig ID="FizzBuzz" Type="Numeric">
+		<SortParam Name="Fizz">
+			<ParamValues>
+				<ParamValue Value="3"/>
+			</ParamValues>
+			<ParamOperator Value="/"/>
+		</SortParam>
+		<SortParam Name="Buzz">
+			<ParamValues>
+				<ParamValue Value="5"/>
+			</ParamValues>
+			<ParamOperator Value="/"/>
+		</SortParam>
+		<SortParam Name="FizzBuzz">
+			<ParamValues>
+				<ParamValue Value="3"/>
+				<ParamValue Value="5"/>
+			</ParamValues>
+			<ParamOperator Value="/"/>
+		</SortParam>
+	</SortConfig>
+</SortConfigs>
